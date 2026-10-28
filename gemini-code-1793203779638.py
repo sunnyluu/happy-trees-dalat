@@ -1,0 +1,380 @@
+html_content = """<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Trees Dalat | Hệ Sinh Thái Giáo Dục Trải Nghiệm Xanh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1b5e20;
+      --primary-light: #2e7d32;
+      --accent: #e8f5e9;
+      --accent-sub: #c8e6c9;
+      --bg: #f9fbf9;
+      --text: #1a2e1f;
+      --text-muted: #526756;
+      --card-bg: #ffffff;
+      --border: #e0e8e2;
+      --shadow-sm: 0 4px 12px rgba(27, 94, 32, 0.05);
+      --shadow-md: 0 12px 30px rgba(27, 94, 32, 0.08);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
+
+    /* Navigation */
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 18px 8%; background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px); position: sticky; top: 0; z-index: 1000;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-size: 20px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 8px; text-decoration: none; }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-links a { text-decoration: none; color: var(--text); font-weight: 600; font-size: 14px; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-btn {
+      background: var(--primary); color: white !important; padding: 10px 22px;
+      border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 14px;
+      transition: all 0.2s ease; box-shadow: 0 4px 14px rgba(27, 94, 32, 0.25);
+    }
+    .nav-btn:hover { background: var(--primary-light); transform: translateY(-1px); }
+
+    /* Hero */
+    .hero { padding: 70px 8% 50px; text-align: center; max-width: 1000px; margin: 0 auto; }
+    .badge {
+      display: inline-block; background: var(--accent); color: var(--primary);
+      font-size: 13px; font-weight: 700; padding: 6px 18px; border-radius: 30px;
+      margin-bottom: 20px; border: 1px solid var(--accent-sub);
+    }
+    .hero h1 { font-size: 42px; font-weight: 800; color: #103314; margin-bottom: 18px; line-height: 1.25; letter-spacing: -0.5px; }
+    .hero p { font-size: 17px; color: var(--text-muted); margin-bottom: 35px; max-width: 760px; margin-left: auto; margin-right: auto; }
+
+    /* Progress Widget */
+    .progress-box {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 20px; padding: 28px; box-shadow: var(--shadow-sm); margin-bottom: 50px;
+    }
+    .progress-header { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 12px; font-size: 15px; }
+    .progress-bar-bg { width: 100%; height: 16px; background: #e8eee9; border-radius: 10px; overflow: hidden; }
+    .progress-bar-fill { width: 70%; height: 100%; background: linear-gradient(90deg, #2e7d32, #66bb6a); border-radius: 10px; transition: width 1s ease; }
+
+    /* Impact Metrics */
+    .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; margin-bottom: 70px; }
+    .metric-card { background: var(--card-bg); border: 1px solid var(--border); padding: 22px; border-radius: 16px; text-align: center; box-shadow: var(--shadow-sm); }
+    .metric-num { font-size: 32px; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
+    .metric-label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* Pillars */
+    .section-head { text-align: center; max-width: 700px; margin: 0 auto 40px; }
+    .section-title { font-size: 28px; font-weight: 800; color: #103314; margin-bottom: 10px; }
+    .section-subtitle { font-size: 15px; color: var(--text-muted); }
+
+    .pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; padding: 0 8% 70px; }
+    .pillar-card {
+      background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px;
+      padding: 28px; box-shadow: var(--shadow-sm); transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .pillar-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .pillar-tag { font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 10px; }
+    .pillar-card h3 { font-size: 18px; margin-bottom: 10px; color: #103314; }
+    .pillar-card p { font-size: 14px; color: var(--text-muted); line-height: 1.55; }
+
+    /* MEDIA SPOTLIGHT (VIDEO & PHOTO GALLERY) */
+    .media-section { padding: 70px 8%; background: #ffffff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .media-featured-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px; margin-bottom: 40px; }
+    @media (max-width: 860px) { .media-featured-grid { grid-template-columns: 1fr; } }
+    
+    .video-wrapper {
+      position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+      border-radius: 18px; background: #1a2e1f; box-shadow: var(--shadow-md);
+    }
+    .video-wrapper iframe, .video-wrapper .placeholder-box {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;
+    }
+    .placeholder-box {
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      background: linear-gradient(135deg, #1b5e20, #2e7d32); color: white; padding: 20px; text-align: center;
+    }
+    .placeholder-box span { font-size: 40px; margin-bottom: 10px; }
+    .placeholder-box p { font-size: 14px; opacity: 0.9; }
+
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
+    .gallery-item {
+      position: relative; height: 180px; border-radius: 14px; overflow: hidden;
+      background: #e8eee9; border: 1px solid var(--border); display: flex;
+      align-items: center; justify-content: center; text-align: center; color: var(--text-muted); font-size: 13px; font-weight: 600;
+    }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .gallery-caption {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 8px 12px;
+      background: rgba(0,0,0,0.65); color: #fff; font-size: 12px; font-weight: 600; text-align: left;
+    }
+
+    /* Open Ledger Table */
+    .ledger-section { padding: 70px 8%; }
+    .table-container { overflow-x: auto; background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow-sm); }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+    th { background: #f1f6f2; padding: 14px 18px; font-weight: 700; color: var(--primary); }
+    td { padding: 14px 18px; border-top: 1px solid var(--border); }
+    tr:hover td { background: #fafdfa; }
+
+    /* CTA */
+    .cta-section { padding: 80px 8%; text-align: center; background: var(--accent); border-top: 1px solid var(--border); }
+    .qr-card {
+      background: white; padding: 25px; display: inline-block; border-radius: 20px;
+      box-shadow: var(--shadow-md); margin-top: 25px; border: 1px solid var(--accent-sub);
+    }
+    .qr-card img { width: 220px; border-radius: 12px; display: block; margin: 0 auto; }
+
+    footer { padding: 35px 8%; text-align: center; font-size: 13px; color: var(--text-muted); background: white; border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="logo">🌲 Happy Trees Dalat</a>
+    <div class="nav-links">
+      <a href="#tru-cot">Hoạt Động</a>
+      <a href="#tu-lieu">Tư Liệu Ảnh/Video</a>
+      <a href="#so-cai">Sổ Cái Thu Chi</a>
+      <a href="#dong-gop" class="nav-btn">Góp Cây Ngay (100k)</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="badge">DỰ ÁN CỘNG ĐỒNG JCI DALAT • QUÝ 4/2026</div>
+    <h1>Hệ Sinh Thái Giáo Dục<br>Trải Nghiệm Xanh Happy Trees</h1>
+    <p>Chung tay kiến tạo 3.000 cây xanh và vườn thảo dược hòa nhập bản địa, kết nối trẻ em yếu thế, trường học và cộng đồng xây dựng cao nguyên Đà Lạt bền vững.</p>
+
+    <!-- Real-time Progress -->
+    <div class="progress-box">
+      <div class="progress-header">
+        <span>Tiến Độ Cán Đích Năm 2026</span>
+        <span>2.100 / 3.000 Cây (70%)</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill"></div>
+      </div>
+    </div>
+
+    <!-- Metrics -->
+    <div class="metrics">
+      <div class="metric-card">
+        <div class="metric-num">1.800</div>
+        <div class="metric-label">Cây Rừng Đã Trồng</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">700</div>
+        <div class="metric-label">Cây Vườn Thảo Dược</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">500</div>
+        <div class="metric-label">Mảng Xanh Đô Thị (UGC)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">100%</div>
+        <div class="metric-label">Minh Bạch Quỹ Tự Chủ</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Pillars Section -->
+  <section id="tru-cot" style="padding-top: 30px;">
+    <div class="section-head">
+      <h2 class="section-title">4 Trọng Tâm Hành Động Q4/2026</h2>
+      <p class="section-subtitle">Tập trung nguồn lực thực tế, lan tỏa giá trị chạm đất và không hình thức.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-tag">Vườn Hòa Nhập • 29/11</div>
+        <h3>Vườn Thảo Dược Cam Ly</h3>
+        <p>300 gốc thảo dược bản địa trên 20 xe đất màu tại Trung tâm Giáo dục Hòa nhập. Nơi trẻ khiếm thính rèn thể chất, tự tay thu hái và đóng gói trà mộc bán tại Lặng Art.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-tag">Vườn Học Đường • Đầu T12</div>
+        <h3>Vườn Dược Liệu THCS Lam Sơn</h3>
+        <p>400 cây xanh & thảo dược tích hợp môn Khoa học Tự nhiên và trải nghiệm thực địa. Đảng ủy, chính quyền và Đoàn phường bảo trợ đất và nước, không thu quỹ phụ huynh.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-tag">Sự Kiện Lớn • 06 - 08/11</div>
+        <h3>Trạm Trải Nghiệm Lamdong Trail</h3>
+        <p>Trạm sinh thái 0 đồng tại Thung Lũng Tình Yêu. Kết nối các vận động viên, trưng bày tranh lá thông, trà thảo mộc và kêu gọi cộng đồng chung tay đóng góp cây.</p>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-tag">Thăm Rừng • Cuối T12</div>
+        <h3>Hành Trình Về Đại Ngàn</h3>
+        <p>Quy mô tinh gọn 20–30 người tại Thung Lũng Tình Yêu: Trẻ em sáng tác tranh lá thông, người lớn chạy Fun Run kết nối năng lượng và đóng góp cây tự nguyện cho dự án.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEDIA SPOTLIGHT: VIDEO & PHOTO GALLERY -->
+  <!-- CHỊ CÓ THỂ THAY ĐỔI LINK ẢNH / VIDEO GOOGLE DRIVE Ở MỤC DƯỚI ĐÂY -->
+  <section class="media-section" id="tu-lieu">
+    <div class="section-head">
+      <h2 class="section-title">Kho Tư Liệu Thực Địa & Truyền Thông</h2>
+      <p class="section-subtitle">Toàn bộ hình ảnh thực tế, video bấm máy 40 tập phim và hoạt động vườn thảo dược.</p>
+    </div>
+
+    <div class="media-featured-grid">
+      <!-- 1. KHUNG VIDEO DRIVE NỔI BẬT (CHỊ DÁN LINK DRIVE VÀO THẺ IFRAME) -->
+      <div>
+        <h3 style="font-size: 16px; margin-bottom: 12px; color: #103314;">🎬 Video Phóng Sự & Chuỗi 40 Tập Phim Di Sản</h3>
+        <div class="video-wrapper">
+          <!-- HƯỚNG DẪN: Thay mã ID video drive vào link bên dưới: https://drive.google.com/file/d/MÃ_VIDEO_CỦA_CHỊ/preview -->
+          <div class="placeholder-box">
+            <span>🎥</span>
+            <strong style="font-size: 16px; margin-bottom: 6px;">Khung Nhúng Video Tư Liệu</strong>
+            <p>Thay link iframe Google Drive của chị vào đây để phát trực tiếp trên web</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. THƯ VIỆN GOOGLE DRIVE CÔNG KHAI -->
+      <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 18px; padding: 25px; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <h3 style="font-size: 16px; margin-bottom: 10px; color: #103314;">📁 Kho Dữ Liệu Mở Google Drive</h3>
+          <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">
+            Toàn bộ ảnh chụp thực địa độ phân giải cao, video thô các buổi dọn đất và tài liệu minh chứng được lưu trữ công khai tại thư mục Drive dự án.
+          </p>
+          <ul style="font-size: 13px; color: var(--text-muted); line-height: 1.8; padding-left: 18px; margin-bottom: 25px;">
+            <li>Thư mục 01: Vườn Hòa Nhập Cam Ly (20 xe đất & giống)</li>
+            <li>Thư mục 02: Vườn Học Đường THCS Lam Sơn</li>
+            <li>Thư mục 03: Trạm Lamdong Trail & Thung Lũng Tình Yêu</li>
+            <li>Thư mục 04: Bản scan sao kê & phiếu chi minh bạch</li>
+          </ul>
+        </div>
+        <!-- HƯỚNG DẪN: Thay link thư mục Drive của chị vào href bên dưới -->
+        <a href="https://drive.google.com/" target="_blank" class="nav-btn" style="text-align: center; border-radius: 12px;">
+          Mở Thư Mục Google Drive Công Khai ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- 3. GALLERY 4 ẢNH THỰC TẾ (CHỊ THAY LINK ẢNH VÀO DƯỚI) -->
+    <h3 style="font-size: 16px; margin-bottom: 14px; color: #103314;">📸 Nhật Ký Hình Ảnh Thực Địa Mới Nhất</h3>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <!-- Chị thay link ảnh Drive vào thẻ img này: <img src="https://lh3.googleusercontent.com/d/MÃ_ẢNH" alt="Cam Ly"> -->
+        <div style="padding: 15px;">🌱 Ảnh 1: Chuẩn bị 20 xe đất đệm Vườn Cam Ly</div>
+        <div class="gallery-caption">Vườn Hòa Nhập Cam Ly</div>
+      </div>
+      <div class="gallery-item">
+        <div style="padding: 15px;">🌸 Ảnh 2: 100 cây Mai Anh Đào đã trồng</div>
+        <div class="gallery-caption">Rừng Mai Anh Đào Đợt 1</div>
+      </div>
+      <div class="gallery-item">
+        <div style="padding: 15px;">🌿 Ảnh 3: Bồn hoa thực nghiệm THCS Lam Sơn</div>
+        <div class="gallery-caption">Vườn Học Đường Lam Sơn</div>
+      </div>
+      <div class="gallery-item">
+        <div style="padding: 15px;">🏃 Ảnh 4: Trạm trải nghiệm tại Lamdong Trail</div>
+        <div class="gallery-caption">Gian Hàng Sống Xanh</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Open Ledger Section -->
+  <section class="ledger-section" id="so-cai">
+    <div class="section-head">
+      <h2 class="section-title">Sổ Cái Tài Chính Minh Bạch (Open Ledger)</h2>
+      <p class="section-subtitle">Dữ liệu tài chính thực tế cập nhật thời gian thực. Cam kết bảo toàn tối thiểu 20 triệu bàn giao 2027.</p>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Thời Gian</th>
+            <th>Hạng Mục Công Việc</th>
+            <th>Nguồn Tiền</th>
+            <th>Dự Chi / Thực Chi</th>
+            <th>Trạng Thái Quản Trị</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>16/02/2026</td>
+            <td>Mua 100 cây Mai Anh Đào Lễ hội</td>
+            <td>Quỹ Dự Án</td>
+            <td><strong>1.200.000 đ</strong></td>
+            <td><span style="color:var(--primary); font-weight:700;">Đã chi (Khớp sao kê)</span></td>
+          </tr>
+          <tr>
+            <td>Tháng 11/2026</td>
+            <td>20 xe đất màu, 300 cây giống, phân tro Vườn Cam Ly</td>
+            <td>Dự án tự chi & Huy động bù</td>
+            <td><strong>21.000.000 đ</strong></td>
+            <td>Chuẩn bị ra quân (29/11)</td>
+          </tr>
+          <tr>
+            <td>Tháng 11/2026</td>
+            <td>Tiền nước tưới Vườn Cam Ly (6 tháng khô)</td>
+            <td>Đề xuất xin hỗ trợ</td>
+            <td><strong>2.700.000 đ</strong></td>
+            <td>Dự kiến xin UBND Phường Cam Ly</td>
+          </tr>
+          <tr>
+            <td>Tháng 12/2026</td>
+            <td>100 cây giống nền tảng THCS Lam Sơn + Phân tro</td>
+            <td>Quỹ Dự Án</td>
+            <td><strong>2.300.000 đ</strong></td>
+            <td>Trường & Đoàn phường bảo trợ</td>
+          </tr>
+          <tr>
+            <td>Quý 4/2026</td>
+            <td>4 Cúp UGC (1tr), Bằng khen (500k), Standee/Backdrop (1tr)</td>
+            <td>Quỹ Dự Án</td>
+            <td><strong>2.500.000 đ</strong></td>
+            <td>Tiền dự án tự chi 100%</td>
+          </tr>
+          <tr>
+            <td>Cuối T12/2026</td>
+            <td>Chương trình Thung Lũng Tình Yêu (20-30 người tinh gọn)</td>
+            <td>Đóng góp cây tự dưỡng</td>
+            <td><strong>2.000.000 đ</strong></td>
+            <td>Bù đắp từ nguồn đóng góp cây</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top: 15px; text-align: right; font-size: 13px; color: var(--text-muted);">
+      * Quỹ dự án hiện có: <strong>30.244.887 đ</strong> • Mục tiêu bảo toàn chuyển giao 2027: <strong>&ge; 20.000.000 đ</strong>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section" id="dong-gop">
+    <h2 style="font-size: 30px; font-weight: 800; color: #103314; margin-bottom: 10px;">Chung Tay Góp Cây Cho Dự Án</h2>
+    <p style="font-size: 15px; color: var(--text-muted); max-width: 600px; margin: 0 auto;">
+      Mỗi 100.000đ đóng góp tương đương 1 mầm thảo dược được trồng, chăm sóc và trao quyền tự lập cho trẻ em khuyết tật tại Cam Ly.
+    </p>
+
+    <div class="qr-card">
+      <p style="font-weight: 700; color: var(--primary); margin-bottom: 10px; font-size: 14px;">QUÉT MÃ VIETQR ĐÓNG GÓP CÂY</p>
+      <img src="https://api.vietqr.io/image/970422-0200970422-compact2.jpg?amount=100000&addInfo=GOP%20CAY%20HAPPY%20TREES" alt="VietQR Happy Trees">
+      <p style="font-size: 12px; color: #666; margin-top: 10px;">Mức đóng góp: <strong>100.000 VNĐ / Cây</strong></p>
+      <p style="font-size: 12px; color: #888;">Cú pháp: <strong>GOP CAY HAPPY TREES</strong></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Dự Án Happy Trees - JCI Dalat | Hệ Sinh Thái Giáo Dục Trải Nghiệm Xanh</p>
+    <p style="margin-top: 6px; font-size: 12px;">Minh bạch nguồn lực • Tự chủ tài chính • Phát triển bền vững</p>
+  </footer>
+
+</body>
+</html>
+"""
+
+# Save file to disk
+file_name = "index.html"
+with open(file_name, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print(f"File created successfully: {file_name}")
